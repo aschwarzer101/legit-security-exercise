@@ -15,7 +15,12 @@ export class TestSuspiciousHoursDetector extends Detector {
     }
 
     detect(event: GitHubEvent): Alert | null {
-        const currentHour = new Date().getHours(); 
+       //  const currentHour = new Date().getHours(); 
+       // changed so it's relative to pusher's time zone 
+        const pushedAt = event.payload.head_commit?.timestamp; 
+
+        if(!pushedAt) return null; 
+        
         if(currentHour >= 21 && currentHour < 23 ) {
             
             return { eventType: event.type, 

@@ -15,8 +15,12 @@ export class SuspiciousHoursDetector extends Detector {
     }
 
     detect(event: GitHubEvent): Alert | null {
-        const currentHour = new Date().getHours(); 
-        if(currentHour >= 14 && currentHour < 16 ) {
+        // changed to account for pushing timezone; github timestamp already include committer's timezone 
+        const pushedAt = event.payload.head_commit?.timestamp; 
+        if(!pushedAt) return null; 
+        // const currentHour = new Date().getHours();
+        const hour = new Date(pushedAt).getHours(); 
+        if(hour >= 14 && hour < 16 ) {
             
             return { eventType: event.type, 
                 description: "Suspicous push detected during restricted hours 14:00-16:00 ",

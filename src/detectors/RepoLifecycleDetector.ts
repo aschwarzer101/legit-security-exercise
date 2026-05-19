@@ -17,6 +17,7 @@ export class RepoLifecycleDetector extends Detector {
     // detects if creation and deletion actions occur within 10 minutes of each other
     // note: Date.now returns in miliseconds, difference checking: 10 min = 600000 ms
     detect(event: GitHubEvent): Alert | null {
+        
         const repoName = event.payload.repository.name; 
         const action = event.payload.action; 
 
