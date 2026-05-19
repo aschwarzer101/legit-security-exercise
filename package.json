@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc", 
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node dist/server.js",
+    "dev": "ts-node src/server.ts", 
+    "smee": "smee -u https://smee.io/DXT7U6xv8uGC6T1 -t http://localhost:3000/webhook"
   },
   "keywords": [],
   "author": "",
