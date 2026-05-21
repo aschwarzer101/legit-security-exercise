@@ -26,7 +26,9 @@ export class RepoLifecycleDetector extends Detector {
         }
 
         if (action === "deleted") {
-            const createdAt = this.repoCreationTime.get(repoName);
+            // change: if creation not tracked in Map then will pull created at time from event payload instead
+            const createdAt = this.repoCreationTime.get(repoName)
+                ?? new Date(event.payload.repository.created_at).getTime();
             this.repoCreationTime.delete(repoName); 
             if (createdAt && Date.now() - createdAt < 600000) {
                
